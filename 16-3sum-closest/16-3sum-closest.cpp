@@ -12,20 +12,14 @@ public:
             k = n-1;
             while(j<k)
             {
+                if(abs(target - ans) > abs(target - (nums[i]+nums[j]+ nums[k])))
+                        ans = nums[i] + nums[j] + nums[k];
                if(nums[j] + nums[k] == currTarget)
                    return target;
                 else if(nums[j] + nums[k] < currTarget)
-                {
-                    if(abs(target - ans) > abs(target - (nums[i]+nums[j]+ nums[k])))
-                        ans = nums[i] + nums[j] + nums[k];
                     j++;
-                }
                 else
-                {
-                    if(abs(target - ans) > abs(target - (nums[i]+nums[j]+ nums[k])))
-                        ans = nums[i] + nums[j] + nums[k];
                     k--;
-                }
             }
         }
         return ans;
