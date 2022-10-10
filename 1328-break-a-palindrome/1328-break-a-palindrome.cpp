@@ -4,18 +4,14 @@ public:
         if(palindrome.size()<=1)
             return "";
         bool replaced = false;
-        for(int i=0; i<palindrome.size(); i++)
+        for(int i=0; i<palindrome.size()/2; i++)
         {
-            if(palindrome[i] != 'a' && (palindrome.size()%2 == 0 ||  
-                                        i!=palindrome.size()/2))
+            if(palindrome[i] != 'a' )
             {
                 palindrome[i] = 'a';
-                replaced = true;
-                break;
+                return palindrome;
             }
         }
-        if(replaced)
-            return palindrome;
         palindrome[palindrome.size()-1] = 'b';
         return palindrome;
     }
