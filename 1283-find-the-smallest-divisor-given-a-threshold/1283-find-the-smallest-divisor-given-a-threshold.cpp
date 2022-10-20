@@ -2,7 +2,7 @@ class Solution {
 public:
     int smallestDivisor(vector<int>& nums, int threshold) {
         int s = 1;
-        int e = 1e9;
+        int e = 1e6;
         int mid;
         int sum;
         int ans;
