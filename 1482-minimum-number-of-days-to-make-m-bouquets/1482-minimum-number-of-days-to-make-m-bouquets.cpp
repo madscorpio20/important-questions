@@ -1,13 +1,8 @@
 class Solution {
 public:
     int minDays(vector<int>& bloomDay, int m, int k) {
-        int s = bloomDay[0];
-        int e = bloomDay[0];
-        for(auto it: bloomDay)
-        {
-            s = min(it,s);
-            e = max(it,e);
-        }
+        int s = 1;
+        int e = 1e9;
         int mid;
         int ans = -1;
         while(s<=e)
