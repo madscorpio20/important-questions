@@ -17,18 +17,14 @@ class Solution{
     	for(int i=0; i<n; i++)
     	{
     	    m[arr[i]]++;
-    	}
-    	for(int i=0; i<n; i++)
-    	{
-    	    m[dep[i] + 1]--;
+    	    m[dep[i]+1]--;
     	}
     	int maxi = 0;
     	int curr = 0;
     	for(auto it: m)
     	{
-    	    if(it.second!=0)
-    	    curr += it.second;
-    	    maxi = max(curr,maxi);
+    	    curr+= it.second;
+    	    maxi = max(maxi,curr);
     	}
     	return maxi;
     }
