@@ -30,12 +30,24 @@ class Solution{
         string s1 = str;
         string s2= "";
         int siz = s1.size();
-        vector<vector<int>> dp(siz+1,vector<int> (siz+1,-1));
+        vector<vector<int>> dp(siz+1,vector<int> (siz+1,0));
         for(int i=siz-1; i>=0; i--)
         {
             s2 += s1[i];
         }
-        return helpCountMin(s1,s2,siz-1,siz-1,dp)/2;
+        // return helpCountMin(s1,s2,siz-1,siz-1,dp)/2;
+        for(int i=1; i<=siz; i++)
+        {
+            for(int j=1; j<=siz; j++)
+            {
+                if(s1[i-1] == s2[j-1])
+                dp[i][j] = dp[i-1][j-1] + 1;
+                else
+                dp[i][j] = max(dp[i-1][j],dp[i][j-1]);
+                
+            }
+        }
+        return siz - dp[siz][siz];
     }
 };
 
