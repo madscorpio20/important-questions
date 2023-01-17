@@ -23,21 +23,27 @@ public:
     }
     int minFlipsMonoIncr(string s) {
         bool prevOne = false;
-        vector<vector<int>> dp(s.size()+1,vector<int>(2,0));
+        int prev1 = 0;
+        int prev0 = 0;
+        int curr1 = 0;
+        int curr0 = 0;
         // return find(s,0,prevOne,dp);
         for(int ind=1; ind<=s.size(); ind++)
         {
             if(s[ind-1] == '0')
             {
-                dp[ind][0] = dp[ind-1][0];
-                dp[ind][1] = min(dp[ind-1][0],dp[ind-1][1]) + 1;
+                curr0 = prev0;
+                curr1 = min(prev0,prev1) + 1;
+                
             }
             else
             {
-                dp[ind][0] = dp[ind-1][0]+1;
-                dp[ind][1] = min(dp[ind-1][1],dp[ind-1][0]);
+                curr0 = prev0+1;
+                curr1 = min(prev1,prev0);
             }
+            prev0 = curr0;
+            prev1 = curr1;
         }
-        return min(dp[s.size()][0],dp[s.size()][1]);
+        return min(curr0,curr1);
     }
 };
