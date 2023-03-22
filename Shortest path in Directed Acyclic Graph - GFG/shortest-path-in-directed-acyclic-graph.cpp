@@ -8,40 +8,66 @@ using namespace std;
 // User function Template for C++
 class Solution {
   public:
+    void dfs(int curr, vector<int> &vis, vector<pair<int,int>> adj[], stack<int> &s)
+    {
+        if(vis[curr]) return;
+        vis[curr] = 1;
+        for(auto it: adj[curr])
+        {
+            dfs(it.first,vis,adj,s);
+        }
+        s.push(curr);
+    }
      vector<int> shortestPath(int N,int M, vector<vector<int>>& edges){
         // code here
-         vector<int> shortestPath(N,1e9);
-        shortestPath[0] = 0;
-        vector<int> indegree(N,0);
-        vector<vector<pair<int,int>>> adj(N);
+        vector<pair<int,int>> adj[N];
         for(auto it: edges)
         {
-                adj[it[0]].push_back(make_pair(it[1],it[2]));
-                indegree[it[1]]++;
+            adj[it[0]].push_back({it[1],it[2]});
         }
-        queue<pair<int,int>> q;
-        q.push(make_pair(0,0));
-        while(!q.empty())
+        vector<int> shortestPath(N,1e9);
+        vector<int> vis(N,0);
+        stack<int> s;
+        for(int i=0; i<N; i++)
         {
-                pair<int,int> front = q.front();
-                int  prevNode = front.first;
-                int prevDistance = front.second;
-                q.pop();
-                for(auto it: adj[front.first])
-                {
-                        int node = it.first;
-                        int distance = it.second;
-                        indegree[node]--;
-                        shortestPath[node] = min(shortestPath[node], prevDistance + distance);
-                        q.push(make_pair(node,shortestPath[node]));
-                }
+            if(!vis[i])
+            {
+                dfs(i,vis,adj,s);
+            }
+        }
+        shortestPath[0] = 0;
+        while(s.top()!=0)
+        s.pop();
+        while(!s.empty())
+        {
+            int node = s.top();
+            s.pop();
+            for(auto it: adj[node])
+            {
+                shortestPath[it.first] = 
+                min(shortestPath[it.first],shortestPath[node] + it.second);
+            }
         }
         for(int i=0; i<N; i++)
         {
             if(shortestPath[i] >= 1e9)
             shortestPath[i] = -1;
         }
+        
         return shortestPath;
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
     }
 };
 
