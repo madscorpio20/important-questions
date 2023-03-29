@@ -21,6 +21,7 @@ class Solution {
         vector<int> shortestpath(N,1e9);
         shortestpath[src] = 0;
         vector<int> vis(N,0);
+        vis[src] = 1;
         while(!q.empty())
         {
             int node = q.front();
@@ -28,10 +29,11 @@ class Solution {
             for(auto it: adj[node])
             {
                 if(!vis[it])
-                q.push(it);
-                vis[it] = 1;
-                shortestpath[it] = min(shortestpath[node] + 1,shortestpath[it]);
-                
+                {
+                    q.push(it);
+                    vis[it] = 1;
+                    shortestpath[it] = shortestpath[node] + 1;
+                }
             }
         }
         for(int i=0; i<N; i++)
