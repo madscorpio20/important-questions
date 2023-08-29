@@ -1,10 +1,11 @@
 class Solution {
 public:
     int bestClosingTime(string customers) {
+        int n = customers.size();
         int cntY = 0;
         map<int,int> m;
-        m[customers.size()] = 0;
-        for(int i=customers.size()-1; i>=0; i--){
+        m[n] = 0;
+        for(int i=n-1; i>=0; i--){
             if(customers[i] == 'Y')
                 cntY++;
             m[i] = cntY;
@@ -13,10 +14,10 @@ public:
         int cntN = 0;
         int minPanelty = INT_MAX;
         int ind = 0;
-        for(int i=0; i<=customers.size(); i++){
+        for(int i=0; i<=n; i++){
             int currPanelty =  cntN + m[i];
             
-            if(i < customers.size() && customers[i] == 'N')
+            if(i < n && customers[i] == 'N')
                 cntN++;
             // cout<<currPanelty<<endl;
             if(currPanelty < minPanelty){
