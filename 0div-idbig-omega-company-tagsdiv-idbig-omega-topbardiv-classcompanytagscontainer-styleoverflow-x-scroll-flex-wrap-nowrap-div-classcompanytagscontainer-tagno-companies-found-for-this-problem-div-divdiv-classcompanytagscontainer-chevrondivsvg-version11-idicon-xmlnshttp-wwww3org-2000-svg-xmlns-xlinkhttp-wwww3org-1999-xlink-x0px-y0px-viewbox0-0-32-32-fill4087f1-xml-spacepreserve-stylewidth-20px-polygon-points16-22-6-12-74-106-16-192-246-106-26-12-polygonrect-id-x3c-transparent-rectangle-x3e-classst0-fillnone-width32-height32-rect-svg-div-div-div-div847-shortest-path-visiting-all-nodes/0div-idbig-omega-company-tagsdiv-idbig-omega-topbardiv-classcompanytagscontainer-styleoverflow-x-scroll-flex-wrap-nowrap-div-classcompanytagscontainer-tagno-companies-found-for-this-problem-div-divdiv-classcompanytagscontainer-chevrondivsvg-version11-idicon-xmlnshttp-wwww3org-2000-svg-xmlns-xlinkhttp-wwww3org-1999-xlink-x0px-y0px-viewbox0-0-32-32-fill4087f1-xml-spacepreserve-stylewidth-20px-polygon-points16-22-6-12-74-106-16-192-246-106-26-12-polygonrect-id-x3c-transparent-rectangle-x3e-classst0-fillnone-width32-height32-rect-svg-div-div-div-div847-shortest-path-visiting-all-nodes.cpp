@@ -1,6 +1,8 @@
 class Solution {
 public:
     int shortestPathLength(vector<vector<int>>& graph) {
+        if(graph.size() <=1)
+            return 0;
         int target = 0;
         int n = graph.size();
         for(int i = 0; i<n; i++){
