@@ -18,7 +18,7 @@ public:
     //     return findMinCost(cost,dp,s);
     // }
     
-//     tabulation
+//     tabulation + space optimization
     int minCostClimbingStairs(vector<int>& cost)
     {
         int size = cost.size();
