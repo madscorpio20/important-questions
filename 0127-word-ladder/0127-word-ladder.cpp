@@ -5,6 +5,7 @@ public:
         for(auto it: wordList){
             mp[it]++;
         }
+        if(!mp[endWord]) return 0;
         map<string,int> vis;
         vis[beginWord]++;
         int cnt = 0;
