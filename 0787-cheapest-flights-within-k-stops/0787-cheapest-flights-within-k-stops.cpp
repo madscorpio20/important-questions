@@ -9,35 +9,29 @@ public:
             int price = it[2];
             adj[u].push_back({v,price});
         }
-        vector<vector<int>> res(n, vector<int> (k+1,1e9));
+        vector<int> res(n,1e9);
         priority_queue<vector<int>, vector<vector<int>>, greater<vector<int>>> pq;
         pq.push({0,src,0});
-        for(int i=0; i<=k; i++){
-            res[src][i] = 0;
-        }
+        res[src] = 0;
         while(!pq.empty()){
             auto it = pq.top();
             pq.pop();
-            int price = it[0];
+            int price = it[2];
             int node = it[1];
-            int dis = it[2];
+            int dis = it[0];
             if(dis >= k){
                 continue;
             }
             for(auto it: adj[node]){
                 int adjNode = it.first;
                 int adjPrice = it.second;
-                if(price + adjPrice < res[adjNode][dis+1]){
-                    res[adjNode][dis+1] = price + adjPrice;
-                    pq.push({price + adjPrice,adjNode,dis+1});
+                if(price + adjPrice < res[adjNode]){
+                    res[adjNode] = price + adjPrice;
+                    pq.push({dis+1,adjNode,price + adjPrice});
                 }
             }
         }
-        int mini = 1e9;
-        for(int i=0; i<=k; i++){
-            mini = min(mini, res[dst][i]);
-        }
-        if(mini == 1e9) return -1;
-        return mini;
+        if(res[dst] == 1e9) return -1;
+        return res[dst];
     }
 };
