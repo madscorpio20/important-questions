@@ -1,33 +1,46 @@
 class Solution {
 public:
-    void dfs(int curr, vector<int> adj[], vector<int>&vis)
-    {
-        vis[curr] = 1;
-        for(auto it: adj[curr])
-        {
-            if(!vis[it])
-                dfs(it,adj,vis);
-        }
-    }
-    int makeConnected(int n, vector<vector<int>>& connections) {
-        int cnt = -1;
-        vector<int> adj[n];
-        if(n-1 > connections.size() )
-            return -1;
-        for(auto it: connections)
-        {
-            adj[it[0]].push_back(it[1]);
-            adj[it[1]].push_back((it[0]));
-        }
-        vector<int> vis(n,0);
-        for(int i=0; i<n; i++)
-        {
-            if(!vis[i]) 
-            {
-                dfs(i,adj,vis);
-                cnt++;
+    class DisjointSet{
+        public: 
+            vector<int> parent,size;
+            DisjointSet(int n){
+                parent.resize(n);
+                size.resize(n,1);
+                for(int i=0; i<n; i++){
+                    parent[i] = i;
+                }
             }
+            int findUltPar(int u){
+                if(parent[u] == u) return u;
+                return parent[u] = findUltPar(parent[u]);
+            }
+            void unionBySize(int u, int v){
+                int ultPar_u = findUltPar(u);
+                int ultPar_v = findUltPar(v);
+                if(ultPar_v == ultPar_u) return;
+                if(size[ultPar_u] < size[ultPar_v]){
+                    parent[ultPar_u] = ultPar_v;
+                    size[ultPar_v]+= size[ultPar_u];
+                }else{
+                    parent[ultPar_v] = ultPar_u;
+                    size[ultPar_u]+= size[ultPar_v];
+                }
+            }
+    };
+    int makeConnected(int n, vector<vector<int>>& connections) {
+        if(connections.size() < n-1) return -1;
+        DisjointSet dis(n);
+        for(auto it: connections){
+            dis.unionBySize(it[0], it[1]);
         }
-        return cnt;
+        int totalComponents = 0;
+        for(int i=0; i<n; i++){
+            if(dis.parent[i] == i){
+                totalComponents++;
+            }
+            
+        }
+        return totalComponents-1;
+        
     }
 };
